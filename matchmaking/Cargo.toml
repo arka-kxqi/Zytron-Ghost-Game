@@ -1,0 +1,51 @@
+[package]
+name = "zmatchmaking"
+description = "Mathmaking for PvP games with provable fairness and randomness"
+keywords = ["zkp", "matchmaking", "game"]
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+homepage.workspace = true
+repository.workspace = true
+categories.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "gen-params"
+path = "src/gen_params/setup.rs"
+required-features = ["gen"]
+
+[dependencies]
+uzkge.workspace = true
+
+ark-ff.workspace = true
+ark-std.workspace = true
+ark-serialize.workspace = true
+ark-bn254.workspace = true
+bincode.workspace = true
+num-bigint.workspace  = true
+num-integer.workspace = true
+rand_chacha.workspace = true
+serde.workspace = true
+rayon = { workspace = true, optional = true}
+structopt =  { workspace = true, optional = true}
+
+[dev-dependencies]
+rand_core = { workspace = true, features = ["getrandom"] }
+
+[features]
+default = ["std", "parallel"]
+std = [
+  "ark-std/std",
+  "ark-ff/std",
+  "ark-bn254/std",
+  "uzkge/std"
+]
+parallel = [
+  "rayon",
+  "ark-std/parallel",
+  "ark-ff/parallel",
+  "uzkge/parallel"
+]
+no_vk = []
+gen = ["uzkge/gen", "parallel", "structopt"]

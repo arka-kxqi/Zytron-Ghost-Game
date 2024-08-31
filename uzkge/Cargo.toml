@@ -1,0 +1,70 @@
+[package]
+name = "uzkge"
+description = "App-specific PlonK with various gadgets & primitives"
+keywords = ["zkp", "plonk", "game"]
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+homepage.workspace = true
+repository.workspace = true
+categories.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "gen-params"
+path = "src/gen_params/setup.rs"
+required-features = ["gen"]
+
+[dependencies]
+ark-ec.workspace = true
+ark-ff.workspace = true
+ark-std.workspace = true
+ark-poly.workspace = true
+ark-serialize.workspace = true
+ark-bn254.workspace = true
+ark-ed-on-bn254.workspace = true
+bincode.workspace = true
+hex.workspace = true
+itertools.workspace = true
+lazy_static.workspace = true
+num-bigint.workspace = true
+num-integer.workspace = true
+rand_chacha.workspace = true
+serde.workspace = true
+sha3.workspace = true
+rayon = { workspace = true, optional = true}
+structopt =  { workspace = true, optional = true}
+tera = { workspace = true, optional = true }
+
+[dev-dependencies]
+rand_core = { workspace = true, features = ["getrandom"] }
+
+[features]
+default = ["std", "parallel"]
+std = [
+  "ark-ec/std",
+  "ark-std/std",
+  "ark-ff/std",
+  "ark-bn254/std"
+]
+parallel = [
+  "rayon",
+  "ark-std/parallel",
+  "ark-ff/parallel",
+  "ark-ec/parallel",
+  "ark-poly/parallel"
+]
+debug = []
+no_vk = []
+no_srs = []
+shuffle = []
+anemoi = []
+lightweight = []
+gen = [
+  "parallel",
+  "shuffle",
+  "structopt",
+  "tera"
+]
+serialize0 = []
+deserialize0 = []
